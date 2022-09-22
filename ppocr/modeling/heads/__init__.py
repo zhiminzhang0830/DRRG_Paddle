@@ -23,6 +23,7 @@ def build_head(config):
     from .det_pse_head import PSEHead
     from .det_fce_head import FCEHead
     from .e2e_pg_head import PGHead
+    from .det_drrg_head import DRRGHead
 
     # rec head
     from .rec_ctc_head import CTCHead
@@ -52,7 +53,7 @@ def build_head(config):
         'ClsHead', 'AttentionHead', 'SRNHead', 'PGHead', 'Transformer',
         'TableAttentionHead', 'SARHead', 'AsterHead', 'SDMGRHead', 'PRENHead',
         'MultiHead', 'ABINetHead', 'TableMasterHead', 'SPINAttentionHead',
-        'VLHead', 'SLAHead', 'RobustScannerHead'
+        'VLHead', 'SLAHead', 'RobustScannerHead', 'DRRGHead'
     ]
 
     #table head

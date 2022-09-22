@@ -25,6 +25,7 @@ from .db_postprocess import DBPostProcess, DistillationDBPostProcess
 from .east_postprocess import EASTPostProcess
 from .sast_postprocess import SASTPostProcess
 from .fce_postprocess import FCEPostProcess
+from .drrg_postprocess import DRRGPostprocess
 from .rec_postprocess import CTCLabelDecode, AttnLabelDecode, SRNLabelDecode, \
     DistillationCTCLabelDecode, NRTRLabelDecode, SARLabelDecode, \
     SEEDLabelDecode, PRENLabelDecode, ViTSTRLabelDecode, ABINetLabelDecode, \
@@ -48,7 +49,7 @@ def build_post_process(config, global_config=None):
         'DistillationSARLabelDecode', 'ViTSTRLabelDecode', 'ABINetLabelDecode',
         'TableMasterLabelDecode', 'SPINLabelDecode',
         'DistillationSerPostProcess', 'DistillationRePostProcess',
-        'VLLabelDecode', 'PicoDetPostProcess'
+        'VLLabelDecode', 'PicoDetPostProcess', 'DRRGPostprocess'
     ]
 
     if config['name'] == 'PSEPostProcess':
