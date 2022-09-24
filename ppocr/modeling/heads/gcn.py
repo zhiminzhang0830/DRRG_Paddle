@@ -40,7 +40,7 @@ class GraphConv(nn.Layer):
         self.in_dim = in_dim
         self.out_dim = out_dim
         self.weight = self.create_parameter([in_dim * 2, out_dim], default_initializer=nn.initializer.XavierUniform())
-        self.bias = self.create_parameter([out_dim], is_bias=True, default_initializer=nn.initializer.Assign([0]))
+        self.bias = self.create_parameter([out_dim], is_bias=True, default_initializer=nn.initializer.Assign([0]*out_dim))
 
         self.aggregator = MeanAggregator()
 

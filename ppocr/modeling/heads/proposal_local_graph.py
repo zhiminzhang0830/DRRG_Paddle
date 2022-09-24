@@ -245,7 +245,6 @@ class ProposalLocalGraphs:
         knn_graph = sorted_dist_inds[:, 1:self.k_at_hops[0] + 1]
         pivot_local_graphs = []
         pivot_knns = []
-        # device = node_feats.device
 
         for pivot_ind, knn in enumerate(knn_graph):
 
@@ -346,16 +345,15 @@ class ProposalLocalGraphs:
                 graphs.
             text_comps (ndarray): The predicted text components.
         """
-
         if preds.ndim == 4:
             assert preds.shape[0] == 1
             preds = paddle.squeeze(preds)
-        pred_text_region = F.sigmoid(preds[0]).cpu().numpy()
-        pred_center_region = F.sigmoid(preds[1]).cpu().numpy()
-        pred_sin_map = preds[2].cpu().numpy()
-        pred_cos_map = preds[3].cpu().numpy()
-        pred_top_height_map = preds[4].cpu().numpy()
-        pred_bot_height_map = preds[5].cpu().numpy()
+        pred_text_region = F.sigmoid(preds[0]).numpy()
+        pred_center_region = F.sigmoid(preds[1]).numpy()
+        pred_sin_map = preds[2].numpy()
+        pred_cos_map = preds[3].numpy()
+        pred_top_height_map = preds[4].numpy()
+        pred_bot_height_map = preds[5].numpy()
 
         comp_attribs, text_comps = self.propose_comps_and_attribs(
             pred_text_region, pred_center_region, pred_top_height_map,

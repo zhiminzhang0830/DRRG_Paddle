@@ -1,19 +1,10 @@
-# Copyright (c) OpenMMLab. All rights reserved.
+
 import paddle
 import paddle.nn.functional as F
 from paddle import nn
 
 
 class DRRGLoss(nn.Layer):
-    """The class for implementing DRRG loss. This is partially adapted from
-    https://github.com/GXYM/DRRG licensed under the MIT license.
-
-    DRRG: `Deep Relational Reasoning Graph Network for Arbitrary Shape Text
-    Detection <https://arxiv.org/abs/1908.05900>`_.
-
-    Args:
-        ohem_ratio (float): The negative/positive ratio in ohem.
-    """
 
     def __init__(self, ohem_ratio=3.0):
         super().__init__()
@@ -88,19 +79,11 @@ class DRRGLoss(nn.Layer):
             list[Tensor]: The list of kernel tensors. Each element stands for
             one kernel level.
         """
-        # assert check_argument.is_type_list(bitmasks, BitmapMasks)
-        # assert isinstance(target_sz, list)
-
         batch_size = len(bitmasks)
-        # num_masks = len(bitmasks[0])
-
         results = []
 
-        # for level_inx in range(num_masks):
-        #     kernel = []
         kernel = []
         for batch_inx in range(batch_size):
-            # mask = paddle.to_tensor(bitmasks[batch_inx].masks[level_inx])
             mask = bitmasks[batch_inx]
             # hxw
             mask_sz = mask.shape

@@ -1,236 +1,108 @@
-English | [简体中文](README_ch.md)
+# 论文名称
+[**Deep Relational Reasoning Graph Network for Arbitrary Shape Text Detection**](https://arxiv.org/abs/2003.07493)
 
-<p align="center">
- <img src="./doc/PaddleOCR_log.png" align="middle" width = "600"/>
-<p align="center">
-<p align="left">
-    <a href="./LICENSE"><img src="https://img.shields.io/badge/license-Apache%202-dfd.svg"></a>
-    <a href="https://github.com/PaddlePaddle/PaddleOCR/releases"><img src="https://img.shields.io/github/v/release/PaddlePaddle/PaddleOCR?color=ffa"></a>
-    <a href=""><img src="https://img.shields.io/badge/python-3.7+-aff.svg"></a>
-    <a href=""><img src="https://img.shields.io/badge/os-linux%2C%20win%2C%20mac-pink.svg"></a>
-    <a href=""><img src="https://img.shields.io/pypi/format/PaddleOCR?color=c77"></a>
-    <a href="https://pypi.org/project/PaddleOCR/"><img src="https://img.shields.io/pypi/dm/PaddleOCR?color=9cf"></a>
-    <a href="https://github.com/PaddlePaddle/PaddleOCR/stargazers"><img src="https://img.shields.io/github/stars/PaddlePaddle/PaddleOCR?color=ccf"></a>
-</p>
+Shi-Xue Zhang, Xiaobin Zhu, Jie-Bo Hou, Chang Liu, Chun Yang, Hongfa Wang, Xu-Cheng Yin
+## 目录
 
-## Introduction
-
-PaddleOCR aims to create multilingual, awesome, leading, and practical OCR tools that help users train better models and apply them into practice.
-
-<div align="center">
-    <img src="./doc/imgs_results/PP-OCRv3/en/en_4.png" width="800">
-</div>
-
-<div align="center">
-    <img src="./doc/imgs_results/ch_ppocr_mobile_v2.0/00006737.jpg" width="800">
-</div>
-
-## 📣 Recent updates
-- **🔥2022.8.24 Release PaddleOCR [release/2.6](https://github.com/PaddlePaddle/PaddleOCR/tree/release/2.6)**
-  - Release [PP-Structurev2](./ppstructure/)，with functions and performance fully upgraded, adapted to Chinese scenes, and new support for [Layout Recovery](./ppstructure/recovery) and **one line command to convert PDF to Word**;
-  - [Layout Analysis](./ppstructure/layout) optimization: model storage reduced by 95%, while speed increased by 11 times, and the average CPU time-cost is only 41ms;
-  - [Table Recognition](./ppstructure/table) optimization: 3 optimization strategies are designed, and the model accuracy is improved by 6% under comparable time consumption;
-  - [Key Information Extraction](./ppstructure/kie) optimization：a visual-independent model structure is designed, the accuracy of semantic entity recognition is increased by 2.8%, and the accuracy of relation extraction is increased by 9.1%.
-- **🔥2022.8 Release [OCR scene application collection](./applications/README_en.md)**
-    - Release **9 vertical models** such as digital tube, LCD screen, license plate, handwriting recognition model, high-precision SVTR model, etc, covering the main OCR vertical applications in general, manufacturing, finance, and transportation industries.
-- **2022.8 Add implementation of [8 cutting-edge algorithms](doc/doc_en/algorithm_overview_en.md)**
-  - Text Detection: [FCENet](doc/doc_en/algorithm_det_fcenet_en.md), [DB++](doc/doc_en/algorithm_det_db_en.md)
-  - Text Recognition: [ViTSTR](doc/doc_en/algorithm_rec_vitstr_en.md), [ABINet](doc/doc_en/algorithm_rec_abinet_en.md), [VisionLAN](doc/doc_en/algorithm_rec_visionlan_en.md), [SPIN](doc/doc_en/algorithm_rec_spin_en.md), [RobustScanner](doc/doc_en/algorithm_rec_robustscanner_en.md)
-  - Table Recognition: [TableMaster](doc/doc_en/algorithm_table_master_en.md)
-- **2022.5.9 Release PaddleOCR [release/2.5](https://github.com/PaddlePaddle/PaddleOCR/tree/release/2.5)**
-    - Release [PP-OCRv3](./doc/doc_en/ppocr_introduction_en.md#pp-ocrv3): With comparable speed, the effect of Chinese scene is further improved by 5% compared with PP-OCRv2, the effect of English scene is improved by 11%, and the average recognition accuracy of 80 language multilingual models is improved by more than 5%.
-    - Release [PPOCRLabelv2](./PPOCRLabel): Add the annotation function for table recognition task, key information extraction task and irregular text image.
-    - Release interactive e-book [*"Dive into OCR"*](./doc/doc_en/ocr_book_en.md), covers the cutting-edge theory and code practice of OCR full stack technology.
-- [more](./doc/doc_en/update_en.md)
+```
+1. 简介
+2. 数据集和复现精度
+3. 开始使用
+```
 
 
-## 🌟 Features
-
-PaddleOCR support a variety of cutting-edge algorithms related to OCR, and developed industrial featured models/solution [PP-OCR](./doc/doc_en/ppocr_introduction_en.md) and [PP-Structure](./ppstructure/README.md) on this basis, and get through the whole process of data production, model training, compression, inference and deployment.
-
-<div align="center">
-    <img src="https://user-images.githubusercontent.com/25809855/186171245-40abc4d7-904f-4949-ade1-250f86ed3a90.png">
-</div>
-
-> It is recommended to start with the “quick experience” in the document tutorial
+## 1. 简介
 
 
-## ⚡ Quick Experience
 
-- Web online experience for the ultra-lightweight OCR: [Online Experience](https://www.paddlepaddle.org.cn/hub/scene/ocr)
-- Mobile DEMO experience (based on EasyEdge and Paddle-Lite, supports iOS and Android systems): [Sign in to the website to obtain the QR code for  installing the App](https://ai.baidu.com/easyedge/app/openSource?from=paddlelite)
-- One line of code quick use: [Quick Start](./doc/doc_en/quickstart_en.md)
+![](doc/arch.jpg)
 
+* 文章中提出了一种关系推理图网络解决任意形状的文本检测问题。将每一个文本实例，看做多个文本组件的组合，使用基于CNN的文本提取模型估计这些文本组件的几何属性（高、宽、方向）；在此基础上，局部图模型大致估计出不同文本组件的链接关系；然后通过GCN进一步推断文本组件与其相邻组件之间的链接可能性；最后根据推理结果将文本组件聚合为整体的文本实例。
 
-<a name="book"></a>
-## 📚 E-book: *Dive Into OCR*
-- [Dive Into OCR ](./doc/doc_en/ocr_book_en.md)
-
-<a name="Community"></a>
-## 👫 Community
-
-- For international developers, we regard [PaddleOCR Discussions](https://github.com/PaddlePaddle/PaddleOCR/discussions) as our international community platform. All ideas and questions can be discussed here in English.
-
-- For Chinese develops, Scan the QR code below with your Wechat, you can join the official technical discussion group. For richer community content, please refer to [中文README](README_ch.md), looking forward to your participation.
-
-<div align="center">
-<img src="https://raw.githubusercontent.com/PaddlePaddle/PaddleOCR/dygraph/doc/joinus.PNG"  width = "150" height = "150" />
-</div>
-
-<a name="Supported-Chinese-model-list"></a>
-
-## 🛠️ PP-OCR Series Model List（Update on September 8th）
-
-| Model introduction                                           | Model name                   | Recommended scene | Detection model                                              | Direction classifier                                         | Recognition model                                            |
-| ------------------------------------------------------------ | ---------------------------- | ----------------- | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
-| Chinese and English ultra-lightweight PP-OCRv3 model（16.2M）     | ch_PP-OCRv3_xx          | Mobile & Server | [inference model](https://paddleocr.bj.bcebos.com/PP-OCRv3/chinese/ch_PP-OCRv3_det_infer.tar) / [trained model](https://paddleocr.bj.bcebos.com/PP-OCRv3/chinese/ch_PP-OCRv3_det_distill_train.tar) | [inference model](https://paddleocr.bj.bcebos.com/dygraph_v2.0/ch/ch_ppocr_mobile_v2.0_cls_infer.tar) / [trained model](https://paddleocr.bj.bcebos.com/dygraph_v2.0/ch/ch_ppocr_mobile_v2.0_cls_train.tar) | [inference model](https://paddleocr.bj.bcebos.com/PP-OCRv3/chinese/ch_PP-OCRv3_rec_infer.tar) / [trained model](https://paddleocr.bj.bcebos.com/PP-OCRv3/chinese/ch_PP-OCRv3_rec_train.tar) |
-| English ultra-lightweight PP-OCRv3 model（13.4M）     | en_PP-OCRv3_xx          | Mobile & Server | [inference model](https://paddleocr.bj.bcebos.com/PP-OCRv3/english/en_PP-OCRv3_det_infer.tar) / [trained model](https://paddleocr.bj.bcebos.com/PP-OCRv3/english/en_PP-OCRv3_det_distill_train.tar) | [inference model](https://paddleocr.bj.bcebos.com/dygraph_v2.0/ch/ch_ppocr_mobile_v2.0_cls_infer.tar) / [trained model](https://paddleocr.bj.bcebos.com/dygraph_v2.0/ch/ch_ppocr_mobile_v2.0_cls_train.tar) | [inference model](https://paddleocr.bj.bcebos.com/PP-OCRv3/english/en_PP-OCRv3_rec_infer.tar) / [trained model](https://paddleocr.bj.bcebos.com/PP-OCRv3/english/en_PP-OCRv3_rec_train.tar) |
-| Chinese and English ultra-lightweight PP-OCRv2 model（11.6M） |  ch_PP-OCRv2_xx |Mobile & Server|[inference model](https://paddleocr.bj.bcebos.com/PP-OCRv2/chinese/ch_PP-OCRv2_det_infer.tar) / [trained model](https://paddleocr.bj.bcebos.com/PP-OCRv2/chinese/ch_PP-OCRv2_det_distill_train.tar)| [inference model](https://paddleocr.bj.bcebos.com/dygraph_v2.0/ch/ch_ppocr_mobile_v2.0_cls_infer.tar) / [trained model](https://paddleocr.bj.bcebos.com/dygraph_v2.0/ch/ch_ppocr_mobile_v2.0_cls_train.tar) |[inference model](https://paddleocr.bj.bcebos.com/PP-OCRv2/chinese/ch_PP-OCRv2_rec_infer.tar) / [trained model](https://paddleocr.bj.bcebos.com/PP-OCRv2/chinese/ch_PP-OCRv2_rec_train.tar)|
-| Chinese and English ultra-lightweight PP-OCR model (9.4M)       | ch_ppocr_mobile_v2.0_xx      | Mobile & server   |[inference model](https://paddleocr.bj.bcebos.com/dygraph_v2.0/ch/ch_ppocr_mobile_v2.0_det_infer.tar) / [trained model](https://paddleocr.bj.bcebos.com/dygraph_v2.0/ch/ch_ppocr_mobile_v2.0_det_train.tar)|[inference model](https://paddleocr.bj.bcebos.com/dygraph_v2.0/ch/ch_ppocr_mobile_v2.0_cls_infer.tar) / [trained model](https://paddleocr.bj.bcebos.com/dygraph_v2.0/ch/ch_ppocr_mobile_v2.0_cls_train.tar) |[inference model](https://paddleocr.bj.bcebos.com/dygraph_v2.0/ch/ch_ppocr_mobile_v2.0_rec_infer.tar) / [trained model](https://paddleocr.bj.bcebos.com/dygraph_v2.0/ch/ch_ppocr_mobile_v2.0_rec_train.tar)      |
-| Chinese and English general PP-OCR model (143.4M)               | ch_ppocr_server_v2.0_xx      | Server            |[inference model](https://paddleocr.bj.bcebos.com/dygraph_v2.0/ch/ch_ppocr_server_v2.0_det_infer.tar) / [trained model](https://paddleocr.bj.bcebos.com/dygraph_v2.0/ch/ch_ppocr_server_v2.0_det_train.tar)    |[inference model](https://paddleocr.bj.bcebos.com/dygraph_v2.0/ch/ch_ppocr_mobile_v2.0_cls_infer.tar) / [trained model](https://paddleocr.bj.bcebos.com/dygraph_v2.0/ch/ch_ppocr_mobile_v2.0_cls_train.tar)    |[inference model](https://paddleocr.bj.bcebos.com/dygraph_v2.0/ch/ch_ppocr_server_v2.0_rec_infer.tar) / [trained model](https://paddleocr.bj.bcebos.com/dygraph_v2.0/ch/ch_ppocr_server_v2.0_rec_train.tar)  |
+* 感谢[DRRG](https://github.com/GXYM/DRRG)、[MMOCR](https://github.com/open-mmlab/mmocr/blob/main/configs/textdet/drrg/README.md)和[MMCV](https://github.com/open-mmlab/mmcv)开源的PyTorch代码，感谢[PaddleOCR](https://github.com/PaddlePaddle/PaddleOCR)，提高了复现论文的效率。
 
 
-- For more model downloads (including multiple languages), please refer to [PP-OCR series model downloads](./doc/doc_en/models_list_en.md).
-- For a new language request, please refer to [Guideline for new language_requests](#language_requests).
-- For structural document analysis models, please refer to [PP-Structure models](./ppstructure/docs/models_list_en.md).
+* 本项目已经上传[AI Studio](https://aistudio.baidu.com/aistudio/clusterprojectdetail/4584040)， 可以直接训练测试。
 
-## 📖 Tutorials
-- [Environment Preparation](./doc/doc_en/environment_en.md)
-- [PP-OCR 🔥](./doc/doc_en/ppocr_introduction_en.md)
-    - [Quick Start](./doc/doc_en/quickstart_en.md)
-    - [Model Zoo](./doc/doc_en/models_en.md)
-    - [Model training](./doc/doc_en/training_en.md)
-        - [Text Detection](./doc/doc_en/detection_en.md)
-        - [Text Recognition](./doc/doc_en/recognition_en.md)
-        - [Text Direction Classification](./doc/doc_en/angle_class_en.md)
-    - Model Compression
-        - [Model Quantization](./deploy/slim/quantization/README_en.md)
-        - [Model Pruning](./deploy/slim/prune/README_en.md)
-        - [Knowledge Distillation](./doc/doc_en/knowledge_distillation_en.md)
-    - [Inference and Deployment](./deploy/README.md)
-        - [Python Inference](./doc/doc_en/inference_ppocr_en.md)
-        - [C++ Inference](./deploy/cpp_infer/readme.md)
-        - [Serving](./deploy/pdserving/README.md)
-        - [Mobile](./deploy/lite/readme.md)
-        - [Paddle2ONNX](./deploy/paddle2onnx/readme.md)
-        - [PaddleCloud](./deploy/paddlecloud/README.md)
-        - [Benchmark](./doc/doc_en/benchmark_en.md)  
-- [PP-Structure 🔥](./ppstructure/README.md)
-    - [Quick Start](./ppstructure/docs/quickstart_en.md)
-    - [Model Zoo](./ppstructure/docs/models_list_en.md)
-    - [Model training](./doc/doc_en/training_en.md)  
-        - [Layout Analysis](./ppstructure/layout/README.md)
-        - [Table Recognition](./ppstructure/table/README.md)
-        - [Key Information Extraction](./ppstructure/kie/README.md)
-    - [Inference and Deployment](./deploy/README.md)
-        - [Python Inference](./ppstructure/docs/inference_en.md)
-        - [C++ Inference](./deploy/cpp_infer/readme.md)
-        - [Serving](./deploy/hubserving/readme_en.md)
-- [Academic Algorithms](./doc/doc_en/algorithm_overview_en.md)
-    - [Text detection](./doc/doc_en/algorithm_overview_en.md)
-    - [Text recognition](./doc/doc_en/algorithm_overview_en.md)
-    - [End-to-end OCR](./doc/doc_en/algorithm_overview_en.md)
-    - [Table Recognition](./doc/doc_en/algorithm_overview_en.md)
-    - [Key Information Extraction](./doc/doc_en/algorithm_overview_en.md)    
-    - [Add New Algorithms to PaddleOCR](./doc/doc_en/add_new_algorithm_en.md)
-- Data Annotation and Synthesis
-    - [Semi-automatic Annotation Tool: PPOCRLabel](./PPOCRLabel/README.md)
-    - [Data Synthesis Tool: Style-Text](./StyleText/README.md)
-    - [Other Data Annotation Tools](./doc/doc_en/data_annotation_en.md)
-    - [Other Data Synthesis Tools](./doc/doc_en/data_synthesis_en.md)
-- Datasets
-    - [General OCR Datasets(Chinese/English)](doc/doc_en/dataset/datasets_en.md)
-    - [HandWritten_OCR_Datasets(Chinese)](doc/doc_en/dataset/handwritten_datasets_en.md)
-    - [Various OCR Datasets(multilingual)](doc/doc_en/dataset/vertical_and_multilingual_datasets_en.md)
-    - [Layout Analysis](doc/doc_en/dataset/layout_datasets_en.md)
-    - [Table Recognition](doc/doc_en/dataset/table_datasets_en.md)
-    - [Key Information Extraction](doc/doc_en/dataset/kie_datasets_en.md)
-- [Code Structure](./doc/doc_en/tree_en.md)
-- [Visualization](#Visualization)
-- [Community](#Community)
-- [New language requests](#language_requests)
-- [FAQ](./doc/doc_en/FAQ_en.md)
-- [References](./doc/doc_en/reference_en.md)
-- [License](#LICENSE)
+## 2. 数据集和复现精度
+
+[CTW1500](https://github.com/Yuliang-Liu/Curve-Text-Detector)
+
+* 数据集大小：
+    * 训练集：1000
+    * 验证集：500
+
+* 数据集目录结构：
+  ```
+    ctw1500/
+      └─ imgs/         
+          └─ training/             
+          └─ test/    
+          └─ training.txt
+          └─ test.txt 
+  ```
+* 数据集可以从[此处下载](https://aistudio.baidu.com/aistudio/datasetdetail/120898)
+
+* **复现精度**
+
+  |Backbone|Dataset|Pretrained|Epochs|Hmean|Config
+  |:-----:|:-----:|:-----:|:-----:|:-----|:-----:
+  |R50|ctw1500|ImageNet(PyTorch)|1200|0.8437|[det_r50_drrg_ctw.yml](configs/det/det_r50_drrg_ctw.yml)
+
+  **预训练模型使用的是PyTorch版本的ResNet50，转换的预训练模型及训练结果权重从[此处下载](https://pan.baidu.com/s/1rLZgkAP9s6xdFmzDD1kLgA?pwd=zee5)
+
+## 3. 开始使用
+
+### 3.1 准备环境
+
+- 框架：
+  - PaddlePaddle==2.3.1
+
+- 克隆本项目：
+
+      git clone https://github.com/zhiminzhang0830/DRRG_Paddle.git
+      cd DRRG_Paddle
+
+- 安装第三方库：
+
+      pip install -r requirements.txt
 
 
-<a name="Visualization"></a>
-## 👀 Visualization [more](./doc/doc_en/visualization_en.md)
+### 3.2 快速开始
 
-<details open>
-<summary>PP-OCRv3 Chinese model</summary>
-<div align="center">
-    <img src="doc/imgs_results/PP-OCRv3/ch/PP-OCRv3-pic001.jpg" width="800">
-    <img src="doc/imgs_results/PP-OCRv3/ch/PP-OCRv3-pic002.jpg" width="800">
-    <img src="doc/imgs_results/PP-OCRv3/ch/PP-OCRv3-pic003.jpg" width="800">
-</div>
-</details>
+  * **设置数据集路径:**
 
-<details open>
-<summary>PP-OCRv3 English model</summary>
-<div align="center">
-    <img src="doc/imgs_results/PP-OCRv3/en/en_1.png" width="800">
-    <img src="doc/imgs_results/PP-OCRv3/en/en_2.png" width="800">
-</div>
-</details>
+        #修改文件configs/det/det_r50_drrg_ctw.yml中的data_dir和label_file_list字段
+        Train:
+            dataset:
+                data_dir: your train data dir
+                label_file_list: 
+                - your train label file
 
-<details open>
-<summary>PP-OCRv3 Multilingual model</summary>
-<div align="center">
-    <img src="doc/imgs_results/PP-OCRv3/multi_lang/japan_2.jpg" width="800">
-    <img src="doc/imgs_results/PP-OCRv3/multi_lang/korean_1.jpg" width="800">
-</div>
-</details>
+        Eval:
+            dataset:
+                data_dir: your eval data dir
+                label_file_list: 
+                - your eval label file
 
-<details open>
-<summary>PP-Structurev2</summary>
+  * **模型训练:**
 
-- layout analysis + table recognition  
-<div align="center">
-    <img src="./ppstructure/docs/table/ppstructure.GIF" width="800">
-</div>
+        # 训练前需要下载预训练模型至pretrain_models文件夹，修改配置文件中预训练模型的路径
+        python3 -m paddle.distributed.launch --log_dir=./debug/ --gpus '0,1,2,3'  tools/train.py -c configs/det/det_r50_drrg_ctw.yml \
+            -o Train.loader.batch_size_per_card=4 \
+            Global.save_model_dir=./output/det_r50_drrg_ctw/ 
+    
 
-- SER (Semantic entity recognition)
-<div align="center">
-    <img src="https://user-images.githubusercontent.com/25809855/186094456-01a1dd11-1433-4437-9ab2-6480ac94ec0a.png" width="600">
-</div>
+  * **模型验证:**
 
-<div align="center">
-    <img src="https://user-images.githubusercontent.com/14270174/185310636-6ce02f7c-790d-479f-b163-ea97a5a04808.jpg" width="600">
-</div>
+        cfg_file=./output/det_r50_drrg_ctw/config.yml
+        model_file=./output/det_r50_drrg_ctw/best_accuracy.pdparams
+        python3 tools/eval.py -c $cfg_file \
+                            -o Global.pretrained_model=$model_file
 
-<div align="center">
-    <img src="https://user-images.githubusercontent.com/14270174/185539517-ccf2372a-f026-4a7c-ad28-c741c770f60a.png" width="600">
-</div>
-
-- RE (Relation Extraction)
-<div align="center">
-    <img src="https://user-images.githubusercontent.com/25809855/186094813-3a8e16cc-42e5-4982-b9f4-0134dfb5688d.png" width="600">
-</div>   
-
-<div align="center">
-    <img src="https://user-images.githubusercontent.com/14270174/185393805-c67ff571-cf7e-4217-a4b0-8b396c4f22bb.jpg" width="600">
-</div>
-
-<div align="center">
-    <img src="https://user-images.githubusercontent.com/14270174/185540080-0431e006-9235-4b6d-b63d-0b3c6e1de48f.jpg" width="600">
-</div>
-
-</details>
-
-<a name="language_requests"></a>
-## 🇺🇳 Guideline for New Language Requests
-
-If you want to request a new language support, a PR with 1 following files are needed：
-
-1. In folder [ppocr/utils/dict](./ppocr/utils/dict),
-it is necessary to submit the dict text to this path and name it with `{language}_dict.txt` that contains a list of all characters. Please see the format example from other files in that folder.
-
-If your language has unique elements, please tell me in advance within any way, such as useful links, wikipedia and so on.
-
-More details, please refer to [Multilingual OCR Development Plan](https://github.com/PaddlePaddle/PaddleOCR/issues/1048).
+ 
 
 
-<a name="LICENSE"></a>
-## 📄 License
-This project is released under <a href="https://github.com/PaddlePaddle/PaddleOCR/blob/master/LICENSE">Apache 2.0 license</a>
+
+
+

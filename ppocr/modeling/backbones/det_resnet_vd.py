@@ -107,7 +107,8 @@ class ConvBNLayer(nn.Layer):
                  dcn_groups=1,
                  is_vd_mode=False,
                  act=None,
-                 is_dcn=False):
+                 is_dcn=False,
+                 freeze_norm=False):
         super(ConvBNLayer, self).__init__()
 
         self.is_vd_mode = is_vd_mode
@@ -131,7 +132,30 @@ class ConvBNLayer(nn.Layer):
                 padding=(kernel_size - 1) // 2,
                 groups=dcn_groups,  #groups,
                 bias_attr=False)
-        self._batch_norm = nn.BatchNorm(out_channels, act=act)
+        if not freeze_norm:
+            self._batch_norm = nn.BatchNorm(out_channels, act=act)
+        else:
+
+            norm_lr = 0. 
+            param_attr = ParamAttr(
+                learning_rate=norm_lr,
+                trainable=False)
+            bias_attr = ParamAttr(
+                learning_rate=norm_lr,
+                trainable=False)
+
+            global_stats = True
+            self._batch_norm = nn.BatchNorm(
+                out_channels,
+                param_attr=param_attr,
+                bias_attr=bias_attr,
+                use_global_stats=global_stats, 
+                act=act)
+            norm_params = self._batch_norm.parameters()
+
+            if freeze_norm:
+                for param in norm_params:
+                    param.stop_gradient = True
 
     def forward(self, inputs):
         if self.is_vd_mode:

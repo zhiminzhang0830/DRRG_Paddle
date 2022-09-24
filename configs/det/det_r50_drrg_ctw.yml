@@ -2,14 +2,14 @@ Global:
   use_gpu: true
   epoch_num: 1200
   log_smooth_window: 20
-  print_batch_step: 20
+  print_batch_step: 5
   save_model_dir: ../work_dir/det_drrg/det_r50_drrg_ctw/
   save_epoch_step: 100
   # evaluation is run every 835 iterations
   eval_batch_step: [37800, 1260]
   cal_metric_during_train: False
-  pretrained_model: tools_align/resnet50-0676ba61.pdparams # ./tools_align/epoch_1200.pdparams #./pretrain_models/ResNet50_vd_ssld_pretrained 
-  checkpoints: 
+  pretrained_model: ./pretrain_models/resnet50-0676ba61.pdparams 
+  checkpoints: ../work_dir/det_drrg/det_r50_drrg_ctw/latest
   save_inference_dir: 
   use_visualdl: False
   infer_img: doc/imgs_en/img_10.jpg
@@ -23,6 +23,8 @@ Architecture:
   Backbone:
     name: ResNet
     layers: 50
+    style: 1
+    freeze_norm: True
   Neck:
     name: FPN_UNet
     in_channels: [256, 512, 1024, 2048]
@@ -40,11 +42,10 @@ Optimizer:
   momentum: 0.9
   lr:
     name: DecayLearningRate
-    learning_rate: 0.0028
-    
+    learning_rate: 0.028
     epochs: 1200
     factor: 0.9
-    end_lr: 1e-7
+    end_lr: 0.0000001
   weight_decay: 0.0001
 
 PostProcess:

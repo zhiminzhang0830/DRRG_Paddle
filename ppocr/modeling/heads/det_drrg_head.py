@@ -159,7 +159,7 @@ class DRRGHead(nn.Layer):
 
         edges = []
         scores = []
-        pivot_local_graphs = pivot_local_graphs.squeeze().cpu().numpy()
+        pivot_local_graphs = pivot_local_graphs.squeeze().numpy()
 
         for pivot_ind, pivot_local_graph in enumerate(pivot_local_graphs):
             pivot = pivot_local_graph[0]

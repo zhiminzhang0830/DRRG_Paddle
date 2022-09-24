@@ -39,34 +39,45 @@ class BottleneckBlock(nn.Layer):
                  num_filters,
                  stride,
                  shortcut=True,
-                 is_dcn=False):
+                 is_dcn=False,
+                 style=0,
+                 freeze_norm=False):
         super(BottleneckBlock, self).__init__()
 
+        if style == 0:
+            strides = [1, stride]
+        elif style == 1:
+            strides = [stride, 1]
         self.conv0 = ConvBNLayer(
             in_channels=num_channels,
             out_channels=num_filters,
             kernel_size=1,
-            act="relu", )
+            stride=strides[0],
+            act="relu", 
+            freeze_norm=freeze_norm)
         self.conv1 = ConvBNLayer(
             in_channels=num_filters,
             out_channels=num_filters,
             kernel_size=3,
-            stride=stride,
+            stride=strides[1],
             act="relu",
             is_dcn=is_dcn,
-            dcn_groups=1, )
+            dcn_groups=1,  
+            freeze_norm=freeze_norm)
         self.conv2 = ConvBNLayer(
             in_channels=num_filters,
             out_channels=num_filters * 4,
             kernel_size=1,
-            act=None, )
+            act=None,  
+            freeze_norm=freeze_norm)
 
         if not shortcut:
             self.short = ConvBNLayer(
                 in_channels=num_channels,
                 out_channels=num_filters * 4,
                 kernel_size=1,
-                stride=stride, )
+                stride=stride,  
+                freeze_norm=freeze_norm)
 
         self.shortcut = shortcut
 
@@ -101,19 +112,22 @@ class BasicBlock(nn.Layer):
             out_channels=num_filters,
             kernel_size=3,
             stride=stride,
-            act="relu")
+            act="relu",
+            freeze_norm=freeze_norm)
         self.conv1 = ConvBNLayer(
             in_channels=num_filters,
             out_channels=num_filters,
             kernel_size=3,
-            act=None)
+            act=None,
+            freeze_norm=freeze_norm)
 
         if not shortcut:
             self.short = ConvBNLayer(
                 in_channels=num_channels,
                 out_channels=num_filters,
                 kernel_size=1,
-                stride=stride)
+                stride=stride,
+                freeze_norm=freeze_norm)
 
         self.shortcut = shortcut
 
@@ -135,11 +149,14 @@ class ResNet(nn.Layer):
                  in_channels=3,
                  layers=50,
                  out_indices=None,
-                 dcn_stage=None):
+                 dcn_stage=None,
+                 style=0,
+                 freeze_norm=False):
         super(ResNet, self).__init__()
 
         self.layers = layers
         self.input_image_channel = in_channels
+        self.freeze_norm = freeze_norm
 
         supported_layers = [18, 34, 50, 101, 152]
         assert layers in supported_layers, \
@@ -170,7 +187,8 @@ class ResNet(nn.Layer):
             out_channels=64,
             kernel_size=7,
             stride=2,
-            act="relu", )
+            act="relu",  
+            freeze_norm=freeze_norm)
         self.pool2d_max = MaxPool2D(
             kernel_size=3,
             stride=2,
@@ -199,7 +217,8 @@ class ResNet(nn.Layer):
                             num_filters=num_filters[block],
                             stride=2 if i == 0 and block != 0 else 1,
                             shortcut=shortcut,
-                            is_dcn=is_dcn))
+                            is_dcn=is_dcn,
+                            style=style))
                     block_list.append(bottleneck_block)
                     shortcut = True
                 if block in self.out_indices:
