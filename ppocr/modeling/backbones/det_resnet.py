@@ -104,7 +104,8 @@ class BasicBlock(nn.Layer):
                  num_filters,
                  stride,
                  shortcut=True,
-                 name=None):
+                 name=None,
+                 freeze_norm=False):
         super(BasicBlock, self).__init__()
         self.stride = stride
         self.conv0 = ConvBNLayer(
