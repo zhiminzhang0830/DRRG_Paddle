@@ -219,7 +219,8 @@ class ResNet(nn.Layer):
                             stride=2 if i == 0 and block != 0 else 1,
                             shortcut=shortcut,
                             is_dcn=is_dcn,
-                            style=style))
+                            style=style,  
+                            freeze_norm=freeze_norm))
                     block_list.append(bottleneck_block)
                     shortcut = True
                 if block in self.out_indices:
@@ -238,7 +239,8 @@ class ResNet(nn.Layer):
                             if i == 0 else num_filters[block],
                             num_filters=num_filters[block],
                             stride=2 if i == 0 and block != 0 else 1,
-                            shortcut=shortcut))
+                            shortcut=shortcut,  
+                            freeze_norm=freeze_norm))
                     block_list.append(basic_block)
                     shortcut = True
                 if block in self.out_indices:
