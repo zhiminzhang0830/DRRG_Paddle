@@ -24,7 +24,6 @@ Architecture:
     name: ResNet
     layers: 50
     style: 1
-    freeze_norm: True
   Neck:
     name: FPN_UNet
     in_channels: [256, 512, 1024, 2048]
