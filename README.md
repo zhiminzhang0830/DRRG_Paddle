@@ -69,7 +69,7 @@ Shi-Xue Zhang, Xiaobin Zhu, Jie-Bo Hou, Chang Liu, Chun Yang, Hongfa Wang, Xu-Ch
   |R50_vd|ctw1500|ImageNet|1200|0.8478|[det_r50_drrg_ctw](configs/det/det_r50_drrg_ctw.yml)
   |R50_vd_dcn|ctw1500|ImageNet|1200|0.8580|[det_r50_dcn_drrg_ctw](configs/det/det_r50_dcn_drrg_ctw.yml)
 
-  **训练结果权重从[此处下载](链接：https://pan.baidu.com/s/1Obb3yR3sOiQPquLDROdWAQ?pwd=238v)
+  **训练结果权重从[此处下载](https://pan.baidu.com/s/1Obb3yR3sOiQPquLDROdWAQ?pwd=238v)
 
 
 ## 4. 开始使用
