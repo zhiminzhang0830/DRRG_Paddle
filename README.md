@@ -49,7 +49,7 @@ Shi-Xue Zhang, Xiaobin Zhu, Jie-Bo Hou, Chang Liu, Chun Yang, Hongfa Wang, Xu-Ch
 
   |Backbone|Dataset|Pretrained|Epochs|Hmean|Config
   |:-----:|:-----:|:-----:|:-----:|:-----|:-----:
-  |R50|ctw1500|ImageNet(PyTorch)|1200|0.8411|[det_r50_drrg_ctw.yml](configs/det/det_r50_drrg_ctw.yml)
+  |R50|ctw1500|ImageNet(PyTorch)|1200|0.8411|[det_r50_drrg_ctw_torch](configs/det/det_r50_drrg_ctw_torch.yml)
 
   **预训练模型使用的是PyTorch版本的ResNet50，转换的预训练模型及训练结果权重从[此处下载](https://pan.baidu.com/s/1xPnrK0NLSyuWDEVuB8YK1Q?pwd=1ccl)
 
