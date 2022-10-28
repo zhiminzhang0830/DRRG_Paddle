@@ -54,9 +54,11 @@ Shi-Xue Zhang, Xiaobin Zhu, Jie-Bo Hou, Chang Liu, Chun Yang, Hongfa Wang, Xu-Ch
   **预训练模型使用的是PyTorch版本的ResNet50，转换的预训练模型及训练结果权重从[此处下载](https://pan.baidu.com/s/1xPnrK0NLSyuWDEVuB8YK1Q?pwd=1ccl)
 
 ## 3. 其他实验
- - 上一节中完成了基于PyTorch预训练模型的复现，本节中基于PaddleOCR中提供的预训练模型     [ResNet50_vd](https://github.com/PaddlePaddle/PaddleOCR/blob/release/2.6/doc/doc_en/detection_en.md) 进行了实验，方便与其他算法进行对比。
+ - 上一节中完成了基于PyTorch预训练模型的复现，本节中基于PaddleOCR中提供的预训练模型   [ResNet18_vd](https://github.com/PaddlePaddle/PaddleOCR/blob/release/2.6/doc/doc_en/detection_en.md) 和 [ResNet50_vd](https://github.com/PaddlePaddle/PaddleOCR/blob/release/2.6/doc/doc_en/detection_en.md) 进行了实验，方便与其他算法进行对比。
  - 预训练模型下载：
-    
+
+        # download the pre-trained model of ResNet18_vd
+        wget -P ./pretrain_models/ https://paddleocr.bj.bcebos.com/pretrained/ResNet18_vd_pretrained.pdparams
         # download the pre-trained model of ResNet50_vd
         wget -P ./pretrain_models/ https://paddleocr.bj.bcebos.com/pretrained/ResNet50_vd_ssld_pretrained.pdparams
 
@@ -66,6 +68,8 @@ Shi-Xue Zhang, Xiaobin Zhu, Jie-Bo Hou, Chang Liu, Chun Yang, Hongfa Wang, Xu-Ch
   |R18_vd|ctw1500|ImageNet|1200|0.8453|[det_r18_drrg_ctw](configs/det/det_r18_drrg_ctw.yml)
   |R50_vd|ctw1500|ImageNet|1200|0.8478|[det_r50_drrg_ctw](configs/det/det_r50_drrg_ctw.yml)
   |R50_vd_dcn|ctw1500|ImageNet|1200|0.8580|[det_r50_dcn_drrg_ctw](configs/det/det_r50_dcn_drrg_ctw.yml)
+
+  **训练结果权重从[此处下载](链接：https://pan.baidu.com/s/1Obb3yR3sOiQPquLDROdWAQ?pwd=238v)
 
 
 ## 4. 开始使用
