@@ -3,12 +3,12 @@ Global:
   epoch_num: 1200
   log_smooth_window: 20
   print_batch_step: 5
-  save_model_dir: ../work_dir/det_drrg/det_r50_drrg_ctw/
+  save_model_dir: ../work_dir/det_drrg/det_r50_drrg_ctw_torch/
   save_epoch_step: 100
   # evaluation is run every 835 iterations
   eval_batch_step: [37800, 1260]
   cal_metric_during_train: False
-  pretrained_model: ./pretrain_models/ResNet50_vd_ssld_pretrained
+  pretrained_model: ./pretrain_models/resnet50-0676ba61.pdparams 
   checkpoints:
   save_inference_dir: 
   use_visualdl: False
@@ -21,8 +21,9 @@ Architecture:
   algorithm: DRRG
   Transform:
   Backbone:
-    name: ResNet_vd
+    name: ResNet
     layers: 50
+    style: 1
   Neck:
     name: FPN_UNet
     in_channels: [256, 512, 1024, 2048]
@@ -62,7 +63,7 @@ Train:
       - /data/Dataset/OCR_det/ctw1500/imgs/training.txt
     transforms:
       - DecodeImage: # load image
-          img_mode: BGR
+          img_mode: RGB
           channel_first: False
           ignore_orientation: True
       - DetLabelEncode: # Class handling label
@@ -110,7 +111,7 @@ Eval:
       - /data/Dataset/OCR_det/ctw1500/imgs/test.txt
     transforms:
       - DecodeImage: # load image
-          img_mode: BGR
+          img_mode: RGB
           channel_first: False
           ignore_orientation: True
       - DetLabelEncode: # Class handling label

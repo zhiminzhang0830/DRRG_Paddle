@@ -3,12 +3,12 @@ Global:
   epoch_num: 1200
   log_smooth_window: 20
   print_batch_step: 5
-  save_model_dir: ../work_dir/det_drrg/det_r50_drrg_ctw/
+  save_model_dir: ../work_dir/det_drrg/det_r18_drrg_ctw/
   save_epoch_step: 100
   # evaluation is run every 835 iterations
   eval_batch_step: [37800, 1260]
   cal_metric_during_train: False
-  pretrained_model: ./pretrain_models/ResNet50_vd_ssld_pretrained
+  pretrained_model: ./pretrain_models/ResNet18_vd_pretrained.pdparams
   checkpoints:
   save_inference_dir: 
   use_visualdl: False
@@ -22,7 +22,8 @@ Architecture:
   Transform:
   Backbone:
     name: ResNet_vd
-    layers: 50
+    layers: 18
+    out_indices: [0,1,2,3]
   Neck:
     name: FPN_UNet
     in_channels: [256, 512, 1024, 2048]

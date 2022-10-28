@@ -3,7 +3,7 @@ Global:
   epoch_num: 1200
   log_smooth_window: 20
   print_batch_step: 5
-  save_model_dir: ../work_dir/det_drrg/det_r50_drrg_ctw/
+  save_model_dir: ../work_dir/det_drrg/det_r50_dcn_drrg_ctw/
   save_epoch_step: 100
   # evaluation is run every 835 iterations
   eval_batch_step: [37800, 1260]
@@ -23,6 +23,8 @@ Architecture:
   Backbone:
     name: ResNet_vd
     layers: 50
+    dcn_stage: [False, True, True, True]
+    out_indices: [0,1,2,3]
   Neck:
     name: FPN_UNet
     in_channels: [256, 512, 1024, 2048]
